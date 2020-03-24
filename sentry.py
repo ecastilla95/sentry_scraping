@@ -11,7 +11,7 @@ host = ''
 username = ''
 password = ''
 
-if host == '' | username == '' | password == '':
+if (host == '') | (username == '') | (password == ''):
     print('Fill the host, username and password for HUE')
     sys.exit(1)
 
@@ -141,7 +141,9 @@ with open('output.tsv', 'w+') as file:
                 print(repr(permission.text))
                 sys.exit(1)
 
-            line = name + '\t' + groups.text.replace(' ', ',') + '\t' + type_of_permission + '\t' + value + '\n'
+            action = re.search('action=(\w+)', content).group(1)
+
+            line = name + '\t' + groups.text.replace(' ', ',') + '\t' + type_of_permission + '\t' + value + '\t' + action + '\n'
             file.write(line)
 
 # We close the browser
